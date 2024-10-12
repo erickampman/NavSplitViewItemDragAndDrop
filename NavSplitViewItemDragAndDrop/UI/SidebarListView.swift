@@ -22,7 +22,7 @@ struct SidebarListView: View {
 			SidebarSpaceAppendView(itemManager: $itemManager)
 		}
 		.background(.white)
-		.border(.blue)
+		.border(.purple, width: 4)
     }
 }
 

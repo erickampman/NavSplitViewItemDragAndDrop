@@ -18,7 +18,7 @@ struct SidebarSpaceAppendView: View {
 		}
 		.onDrop(of: [UTType.text],
 				delegate: SidebarContainerDropDelegate(highlight: $highlight, itemManager: $itemManager))
-
+		.border(.orange, width: 2)
     }
 }
 
