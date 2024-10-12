@@ -17,7 +17,7 @@ struct DetailBaseView: View {
 		ZStack {
 			DetailGridView(itemManager: $itemManager)
 		}
-		.onDrop(of: [UTType.text],
+		.onDrop(of: [UTType.item],
 				delegate: DetailBaseDropDelegate(highlight: $highlight, draggedID: $draggedItem, itemManager: $itemManager))
 
     }

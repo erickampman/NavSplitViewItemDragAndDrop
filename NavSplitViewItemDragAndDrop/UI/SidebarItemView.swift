@@ -19,7 +19,7 @@ struct SidebarItemView: View {
 				.font(.title3)
 				.frame(width: 100, height: 40)
 				.cornerRadius(10)
-				.onDrop(of: [UTType.text],
+				.onDrop(of: [UTType.item],
 						delegate: SidebarItemDropDelegate(itemID: item.id,
 														  highlight: $highlight,
 														  itemManager: $itemManager))

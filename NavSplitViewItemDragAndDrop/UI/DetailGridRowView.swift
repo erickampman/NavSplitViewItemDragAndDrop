@@ -17,14 +17,14 @@ struct DetailGridRowView: View {
 		GridRow {
 			ForEach(itemManager.trailingItems) { item in
 				DetailItemView(item: item, itemManager: $itemManager)
-					.draggable(item.id)
+					.draggable(item)
 					.border(Color.blue, width: 4)
 			}
 			Spacer()
 		}
 //		.background(highlight ? .white : .gray)
 		.background(.white)
-		.onDrop(of: [UTType.text],
+		.onDrop(of: [UTType.item],
 				delegate: DetailRowDropDelegate(highlight: $highlight, itemManager: $itemManager))
     }
 }

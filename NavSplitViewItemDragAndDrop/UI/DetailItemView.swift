@@ -21,7 +21,7 @@ struct DetailItemView: View {
 				.frame(width: 100, height: 40)
 				.background(.white)
 				.cornerRadius(10)
-				.onDrop(of: [UTType.text],
+				.onDrop(of: [UTType.item],
 						delegate: DetailItemDropDelegate(itemID: item.id,
 														 highlight: $highlight,
 														 itemManager: $itemManager))

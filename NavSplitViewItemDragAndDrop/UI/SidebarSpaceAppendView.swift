@@ -16,7 +16,7 @@ struct SidebarSpaceAppendView: View {
 		ZStack {
 			Spacer()
 		}
-		.onDrop(of: [UTType.text],
+		.onDrop(of: [UTType.item],
 				delegate: SidebarContainerDropDelegate(highlight: $highlight, itemManager: $itemManager))
 		.border(.orange, width: 2)
     }

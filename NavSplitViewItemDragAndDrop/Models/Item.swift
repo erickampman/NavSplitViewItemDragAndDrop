@@ -5,8 +5,12 @@
 //  Created by Eric Kampman on 10/7/24.
 //
 
-import Foundation
+import SwiftUI
+import UniformTypeIdentifiers
 
+extension UTType {
+	static var item = UTType(exportedAs: "com.unlikelyware.item")
+}
 
 final class Item: Codable, Identifiable {
 	let title: String
@@ -45,6 +49,12 @@ final class Item: Codable, Identifiable {
 			.init(title: "Active", instance: 2),
 			.init(title: "Active", instance: 3),
 		]
+	}
+}
+
+extension Item: Transferable {
+	static var transferRepresentation: some TransferRepresentation {
+		CodableRepresentation(contentType: .item)
 	}
 }
 		

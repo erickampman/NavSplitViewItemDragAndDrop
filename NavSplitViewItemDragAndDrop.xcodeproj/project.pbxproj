@@ -15,9 +15,22 @@
 		E4BB18572CB813D7008DF66C /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		E49C58942CBB30E100C80FFA /* Exceptions for "NavSplitViewItemDragAndDrop" folder in "NavSplitViewItemDragAndDrop" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = E460A86A2CB499F7008B6EFC /* NavSplitViewItemDragAndDrop */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		E460A86D2CB499F7008B6EFC /* NavSplitViewItemDragAndDrop */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E49C58942CBB30E100C80FFA /* Exceptions for "NavSplitViewItemDragAndDrop" folder in "NavSplitViewItemDragAndDrop" target */,
+			);
 			path = NavSplitViewItemDragAndDrop;
 			sourceTree = "<group>";
 		};
@@ -259,6 +272,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NavSplitViewItemDragAndDrop/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -299,6 +313,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NavSplitViewItemDragAndDrop/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

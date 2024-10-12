@@ -16,7 +16,7 @@ struct SidebarListView: View {
 		List {
 			ForEach(itemManager.leadingItems) { item in
 				SidebarItemView(item: item, itemManager: $itemManager)
-					.draggable(item.id)
+					.draggable(item)
 					.border(Color.blue, width: 4)
 			}
 			SidebarSpaceAppendView(itemManager: $itemManager)
