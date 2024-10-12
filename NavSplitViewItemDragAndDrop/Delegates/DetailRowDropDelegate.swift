@@ -10,18 +10,11 @@ import UniformTypeIdentifiers
 
 struct DetailRowDropDelegate: DropDelegate {
 	@Binding var highlight: Bool
-	@Binding var draggedID: String?
 	@Binding var itemManager: ItemManager
 	let id = UUID()
 	
 	func performDrop(info: DropInfo) -> Bool {
 		print("DetailRowDropDelegate \(id.description) performDrop")
-		
-//		if draggedID == nil {
-//			print("DetailRowDropDelegate \(id.description) performDrop -- draggedID is nil")
-//			return false
-//		}
-//		
 		
 		itemManager.clearOriginalPosition()
 		itemManager.clearCurrentPosition()

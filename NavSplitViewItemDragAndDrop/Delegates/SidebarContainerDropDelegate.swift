@@ -10,7 +10,6 @@ import UniformTypeIdentifiers
 
 struct SidebarContainerDropDelegate: DropDelegate {
 	@Binding var highlight: Bool
-	@Binding var draggedID: String?
 	@Binding var itemManager: ItemManager
 
 	let id = UUID()

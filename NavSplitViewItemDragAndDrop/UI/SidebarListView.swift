@@ -10,7 +10,6 @@ import UniformTypeIdentifiers
 
 struct SidebarListView: View {
 	@Binding var itemManager: ItemManager
-	@State var draggedItem: String?
 	@State var highlight: Bool = false
 
 	var body: some View {
@@ -20,11 +19,10 @@ struct SidebarListView: View {
 					.draggable(item.id)
 					.border(Color.blue, width: 4)
 			}
+			SidebarSpaceAppendView(itemManager: $itemManager)
 		}
 		.background(.white)
 		.border(.blue)
-		.onDrop(of: [UTType.text],
-				delegate: SidebarContainerDropDelegate(highlight: $highlight, draggedID: $draggedItem, itemManager: $itemManager))
     }
 }
 
