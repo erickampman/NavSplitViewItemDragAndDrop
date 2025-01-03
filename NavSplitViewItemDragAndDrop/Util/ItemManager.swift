@@ -9,12 +9,12 @@ import SwiftUI
 
 @Observable
 class ItemManager {
-	var leadingItems = [Item]()
-	var trailingItems = [Item]()
+	var sidebarItems = [Item]()
+	var detailItems = [Item]()
 	
 	enum Location: String {
-		case leading
-		case trailing
+		case sidebar
+		case detail
 		case missing
 		
 		var description: String {
@@ -48,11 +48,11 @@ class ItemManager {
 	func clearAllOriginals() {
 		// just in case it's in both? If so probably should have been caught earlier
 		if let originalItem {
-			if let index = leadingItemIndexForID(originalItem.id) {
-				leadingItems.remove(at: index)
+			if let index = sidebarItemIndexForID(originalItem.id) {
+				sidebarItems.remove(at: index)
 			}
-			if let index = trailingItemIndexForID(originalItem.id) {
-				trailingItems.remove(at: index)
+			if let index = detailItemIndexForID(originalItem.id) {
+				detailItems.remove(at: index)
 			}
 		}
 	}
@@ -61,10 +61,10 @@ class ItemManager {
 		guard let originalPosition, let originalIndex, let originalItem else { return }
 		
 		switch originalPosition {
-		case .leading:
-			leadingItems.insert(originalItem, at: originalIndex)
-		case .trailing:
-			trailingItems.insert(originalItem, at: originalIndex)
+		case .sidebar:
+			sidebarItems.insert(originalItem, at: originalIndex)
+		case .detail:
+			detailItems.insert(originalItem, at: originalIndex)
 		default:
 			print("Unknown original position: \(originalPosition)")
 		}
@@ -73,10 +73,10 @@ class ItemManager {
 	func insertOriginalItem(at index: Int, location: Location) {
 		if let originalItem {
 			switch location {
-			case .leading:
-				leadingItems.insert(originalItem, at: index)
-			case .trailing:
-				trailingItems.insert(originalItem, at: index)
+			case .sidebar:
+				sidebarItems.insert(originalItem, at: index)
+			case .detail:
+				detailItems.insert(originalItem, at: index)
 			default:
 				break
 			}
@@ -86,10 +86,10 @@ class ItemManager {
 	func appendOriginalItem(at location: Location) {
 		if let originalItem {
 			switch location {
-			case .leading:
-				leadingItems.append(originalItem)
-			case .trailing:
-				trailingItems.append(originalItem)
+			case .sidebar:
+				sidebarItems.append(originalItem)
+			case .detail:
+				detailItems.append(originalItem)
 			default:
 				break
 			}
@@ -139,10 +139,10 @@ class ItemManager {
 		guard let currentPosition, let currentIndex else { return false }
 		
 		print("isCurrentPositionForID \(id) -- \(currentPosition):\(currentIndex)")
-		if let index = leadingItemIndexForID(id) {
-			return currentPosition == .leading && currentIndex == index
-		} else if let index = trailingItemIndexForID(id) {
-			return currentPosition == .trailing && currentIndex == index
+		if let index = sidebarItemIndexForID(id) {
+			return currentPosition == .sidebar && currentIndex == index
+		} else if let index = detailItemIndexForID(id) {
+			return currentPosition == .detail && currentIndex == index
 		}
 		
 		return false
@@ -152,67 +152,67 @@ class ItemManager {
 		guard let currentPosition, let currentIndex else { return false }
 		
 		switch currentPosition {
-		case .leading:
-			return currentIndex == leadingItems.count - 1
-		case .trailing:
-			return currentIndex == trailingItems.count - 1
+		case .sidebar:
+			return currentIndex == sidebarItems.count - 1
+		case .detail:
+			return currentIndex == detailItems.count - 1
 		default:
 			return false
 		}
 	}
-	 var currenPositionIsLastInLeading: Bool {
+	 var currenPositionIsLastInSidebar: Bool {
 		 guard let currentPosition, let currentIndex else { return false }
-		 print("currenPositionIsLastInLeading \(currentPosition):\(currentIndex) count: \(leadingItems.count)")
-		 return currentPosition == .leading && currentIndex == leadingItems.count - 1
+		 print("currenPositionIsLastInSidebar \(currentPosition):\(currentIndex) count: \(sidebarItems.count)")
+		 return currentPosition == .sidebar && currentIndex == sidebarItems.count - 1
 	}
 	
-	var currenPositionIsLastInTrailing: Bool {
+	var currenPositionIsLastInDetail: Bool {
 		guard let currentPosition, let currentIndex else { return false }
-		print("currenPositionIsLastInTrailing \(currentPosition):\(currentIndex) count: \(trailingItems.count)")
-		return currentPosition == .trailing && currentIndex == trailingItems.count - 1
+		print("currenPositionIsLastInDetail \(currentPosition):\(currentIndex) count: \(detailItems.count)")
+		return currentPosition == .detail && currentIndex == detailItems.count - 1
 	}
 	
-	var draggedItemInLeading: Int? {
+	var draggedItemInSidebar: Int? {
 		guard let originalItem else { return nil }
-		return leadingItems.firstIndex(where: {
+		return sidebarItems.firstIndex(where: {
 			$0.id == originalItem.id
 		})
 	}
-	var draggedItemInTrailing: Int? {
+	var draggedItemInDetail: Int? {
 		guard let originalItem else { return nil }
-		return trailingItems.firstIndex(where: {
+		return detailItems.firstIndex(where: {
 			$0.id == originalItem.id
 		})
 	}
 
 	init() {
-		leadingItems = Item.sidebarItems
-		trailingItems = Item.detailItems
+		sidebarItems = Item.sidebarItems
+		detailItems = Item.detailItems
 	}
 
-	func leadingItemIndexForID(_ id: String) -> Int? {
-		leadingItems.firstIndex { $0.id == id }
+	func sidebarItemIndexForID(_ id: String) -> Int? {
+		sidebarItems.firstIndex { $0.id == id }
 	}
 	
-	func trailingItemIndexForID(_ id: String) -> Int? {
-		trailingItems.firstIndex { $0.id == id }
+	func detailItemIndexForID(_ id: String) -> Int? {
+		detailItems.firstIndex { $0.id == id }
 	}
 	
 	func location(for id: String) -> Location {
-		if let _ = leadingItemIndexForID(id) {
-			return .leading
-		} else if let _ = trailingItemIndexForID(id) {
-			return .trailing
+		if let _ = sidebarItemIndexForID(id) {
+			return .sidebar
+		} else if let _ = detailItemIndexForID(id) {
+			return .detail
 		} else {
 			return .missing
 		}
 	}
 	
 	func itemFromID(_ id: String) -> Item? {
-		if let index = leadingItemIndexForID(id) {
-			return leadingItems[index]
-		} else if let index = trailingItemIndexForID(id) {
-			return trailingItems[index]
+		if let index = sidebarItemIndexForID(id) {
+			return sidebarItems[index]
+		} else if let index = detailItemIndexForID(id) {
+			return detailItems[index]
 		} else {
 			return nil
 		}
@@ -220,10 +220,10 @@ class ItemManager {
 	
 	func appendForID(_ id: String, to location: Location) {
 		switch location {
-		case .leading:
-			leadingItems.append(Item(id: id))
-		case .trailing:
-			trailingItems.append(Item(id: id))
+		case .sidebar:
+			sidebarItems.append(Item(id: id))
+		case .detail:
+			detailItems.append(Item(id: id))
 		default:
 			print("appendForID -- Unknown location")
 //			fatalError("Unknown location: \(location)")
@@ -231,10 +231,10 @@ class ItemManager {
 	}
 	
 	func removeForID(_ id: String) {
-		if let index = leadingItemIndexForID(id) {
-			leadingItems.remove(at: index)
-		} else if let index = trailingItemIndexForID(id) {
-			trailingItems.remove(at: index)
+		if let index = sidebarItemIndexForID(id) {
+			sidebarItems.remove(at: index)
+		} else if let index = detailItemIndexForID(id) {
+			detailItems.remove(at: index)
 		} else {
 			print("removeForID -- Unknown location")
 		}
@@ -242,17 +242,17 @@ class ItemManager {
 	
 	func removeForID(_ id: String, location: Location) {
 		switch location {
-		case .leading:
-			if let index = leadingItemIndexForID(id) {
-				leadingItems.remove(at: index)
+		case .sidebar:
+			if let index = sidebarItemIndexForID(id) {
+				sidebarItems.remove(at: index)
 			} else {
-				print("removeForID -- missing id in leadingItems")
+				print("removeForID -- missing id in sidebar Items")
 			}
-		case .trailing:
-			if let index = trailingItemIndexForID(id) {
-				trailingItems.remove(at: index)
+		case .detail:
+			if let index = detailItemIndexForID(id) {
+				detailItems.remove(at: index)
 			} else {
-				print("removeForID -- missing id in trailing items")
+				print("removeForID -- missing id in detail items")
 			}
 		default :
 			print("removeForID -- Unknown location")
@@ -261,10 +261,10 @@ class ItemManager {
 	
 	func removeAtIndex(_ index: Int, location: Location) {
 		switch location {
-		case .leading:
-			leadingItems.remove(at: index)
-		case .trailing:
-			trailingItems.remove(at: index)
+		case .sidebar:
+			sidebarItems.remove(at: index)
+		case .detail:
+			detailItems.remove(at: index)
 		default:
 			print("removeAtIndex -- Unknown location")
 		}
@@ -272,10 +272,10 @@ class ItemManager {
 	
 	func insertForID(_ id: String, at index: Int, location: Location) {
 		switch location {
-		case .leading:
-			leadingItems.insert(Item(id: id), at: index)
-		case .trailing:
-			trailingItems.insert(Item(id: id), at: index)
+		case .sidebar:
+			sidebarItems.insert(Item(id: id), at: index)
+		case .detail:
+			detailItems.insert(Item(id: id), at: index)
 		default:
 			print("insertForID -- Unknown location")
 		}

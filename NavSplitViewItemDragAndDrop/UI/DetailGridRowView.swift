@@ -15,7 +15,7 @@ struct DetailGridRowView: View {
 
     var body: some View {
 		GridRow {
-			ForEach(itemManager.trailingItems) { item in
+			ForEach(itemManager.detailItems) { item in
 				DetailItemView(item: item, itemManager: $itemManager)
 					.draggable(item)
 					.border(Color.blue, width: 4)
@@ -23,7 +23,7 @@ struct DetailGridRowView: View {
 			Spacer()
 		}
 //		.background(highlight ? .white : .gray)
-		.background(.white)
+//		.background(.green)
 		.onDrop(of: [UTType.item],
 				delegate: DetailRowDropDelegate(highlight: $highlight, itemManager: $itemManager))
     }

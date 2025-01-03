@@ -40,24 +40,24 @@ struct SidebarContainerDropDelegate: DropDelegate {
 
 		if itemManager.isDragging {
 			if itemManager.currentPositionIsSet {
-				if itemManager.currenPositionIsLastInLeading {
+				if itemManager.currenPositionIsLastInSidebar {
 					// overly complicated -- FIXME
-					if let index = itemManager.draggedItemInLeading {
+					if let index = itemManager.draggedItemInSidebar {
 						print("SidebarContainerDropDelegate \(id.description) dropEntered -- original at \(index)")
 						print("SidebarContainerDropDelegate \(id.description) dropEntered -- current position, avoid thrashing")
 					} else {
 						print("SidebarContainerDropDelegate \(id.description) original item missing, appending")
-						itemManager.appendOriginalItem(at: .leading)
+						itemManager.appendOriginalItem(at: .sidebar)
 					}
 				} else {
 					print("SidebarContainerDropDelegate \(id.description) current position set, appending")
 					itemManager.clearAllOriginals() // should be at most 1, FIXME -- add check
-					itemManager.appendOriginalItem(at: .leading)
+					itemManager.appendOriginalItem(at: .sidebar)
 				}
 			} else {
 				print("SidebarContainerDropDelegate \(id.description) no current position, appending")
 				itemManager.clearAllOriginals() // should be at most 1, FIXME -- add check
-				itemManager.appendOriginalItem(at: .leading)
+				itemManager.appendOriginalItem(at: .sidebar)
 			}
 		} else {
 			// is not dragging already??? Error

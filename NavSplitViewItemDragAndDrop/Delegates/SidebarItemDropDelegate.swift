@@ -21,24 +21,24 @@ struct SidebarItemDropDelegate: DropDelegate {
 			return false
 		}
 		
-		guard let _ = itemManager.leadingItemIndexForID(itemID) else {
-			print("SidebarItemDropDelegate \(itemID) performDrop -- leading index problem")
+		guard let _ = itemManager.sidebarItemIndexForID(itemID) else {
+			print("SidebarItemDropDelegate \(itemID) performDrop -- sidebar index problem")
 			print("<<<  SidebarItemDropDelegate performDrop EXIT")
 			return false
 		}
 		
 		if let item = itemManager.originalItem {
-			if let index = itemManager.leadingItemIndexForID(item.id) {
+			if let index = itemManager.sidebarItemIndexForID(item.id) {
 				print("SidebarItemDropDelegate \(itemID) performDrop -- item is at \(index)")
 			} else {
 				// is the item already inserted?
-				if let index = itemManager.leadingItemIndexForID(item.id) {
+				if let index = itemManager.sidebarItemIndexForID(item.id) {
 					print("SidebarItemDropDelegate \(itemID) performDrop -- insert \(item.id) at \(index)")
-					itemManager.insertForID(item.id, at: index, location: .leading)
+					itemManager.insertForID(item.id, at: index, location: .sidebar)
 				} else {
 					print("SidebarItemDropDelegate \(itemID) performDrop -- index is nil")
-					if let index = itemManager.leadingItemIndexForID(itemID) { // find OUR item index
-						itemManager.insertForID(item.id, at: index, location: .trailing)
+					if let index = itemManager.sidebarItemIndexForID(itemID) { // find OUR item index
+						itemManager.insertForID(item.id, at: index, location: .sidebar)
 					}
 
 				}
@@ -74,9 +74,9 @@ struct SidebarItemDropDelegate: DropDelegate {
 		}
 		
 		// this doesn't need to be calculated every time. FIXME
-		guard let leadingIndex = itemManager.leadingItemIndexForID(itemID) else {
-			// leading Index not found for itemID. Should not happen.
-			print("SidebarItemDropDelegate \(itemID) dropEntered -- trailing index problem")
+		guard let sidebarIndex = itemManager.sidebarItemIndexForID(itemID) else {
+			// sidebar Index not found for itemID. Should not happen.
+			print("SidebarItemDropDelegate \(itemID) dropEntered -- sidebar index problem")
 			print("<<<  SidebarItemDropDelegate dropEntered EXIT")
 			return
 		}
@@ -90,26 +90,26 @@ struct SidebarItemDropDelegate: DropDelegate {
 					return
 				} else {
 					itemManager.clearAllOriginals() // should be at most 1, FIXME -- add check
-					itemManager.setCurrentPosition(.leading, index: leadingIndex)	// bookkeeping
-					print("SidebarItemDropDelegate \(itemID) adjusting current position at \(leadingIndex)")
+					itemManager.setCurrentPosition(.sidebar, index: sidebarIndex)	// bookkeeping
+					print("SidebarItemDropDelegate \(itemID) adjusting current position at \(sidebarIndex)")
 					withAnimation {
-						itemManager.insertOriginalItem(at: leadingIndex, location: .leading) 	// actual change of item
+						itemManager.insertOriginalItem(at: sidebarIndex, location: .sidebar) 	// actual change of item
 					}
 				}
 			} else { // current position is not yet set
 				itemManager.clearAllOriginals() // should be at most 1, FIXME -- add check
-				itemManager.setCurrentPosition(.leading, index: leadingIndex)	// bookkeeping
-				print("SidebarItemDropDelegate \(itemID) setting position at \(leadingIndex)")
+				itemManager.setCurrentPosition(.sidebar, index: sidebarIndex)	// bookkeeping
+				print("SidebarItemDropDelegate \(itemID) setting position at \(sidebarIndex)")
 				withAnimation {
-					itemManager.insertOriginalItem(at: leadingIndex, location: .leading)	// actual change of item
+					itemManager.insertOriginalItem(at: sidebarIndex, location: .sidebar)	// actual change of item
 				}
 			}
 		} else {
 			// Drag is beginning. Save in originalXXX values in itemManager.
 			print("SidebarItemDropDelegate +++++++++++++++++++++++++++++++++++++++++++++++++++++")
+			itemManager.setOriginalPosition(.sidebar, index: sidebarIndex, item: Item(id: itemID)) // bookkeeping
+			itemManager.setCurrentPosition(.sidebar, index: sidebarIndex)	// bookkeeping
 			print("SidebarItemDropDelegate \(itemID) \(itemManager.positionInfo) begginning drag")
-			itemManager.setOriginalPosition(.leading, index: leadingIndex, item: Item(id: itemID)) // bookkeeping
-			itemManager.setCurrentPosition(.leading, index: leadingIndex)	// bookkeeping
 			withAnimation {
 				itemManager.removeForID(itemID)  // TEMP -- need much more to get this right
 				// itemManager.clearAllOriginals() // should be at most 1, FIXME -- add check

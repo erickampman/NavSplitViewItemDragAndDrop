@@ -35,24 +35,24 @@ struct DetailRowDropDelegate: DropDelegate {
 
 		if itemManager.isDragging {
 			if itemManager.currentPositionIsSet {
-				if itemManager.currenPositionIsLastInTrailing {
+				if itemManager.currenPositionIsLastInDetail {
 					// overly complicated -- FIXME
-					if let index = itemManager.draggedItemInTrailing {
+					if let index = itemManager.draggedItemInDetail {
 						print("DetailRowDropDelegate \(id.description) dropEntered -- original at \(index)")
 						print("DetailRowDropDelegate \(id.description) dropEntered -- current position, avoid thrashing")
 					} else {
 						print("DetailRowDropDelegate \(id.description) original item missing, appending")
-						itemManager.appendOriginalItem(at: .trailing)
+						itemManager.appendOriginalItem(at: .detail)
 					}
 				} else {
 					print("DetailRowDropDelegate \(id.description) current position set, appending")
 					itemManager.clearAllOriginals() // should be at most 1, FIXME -- add check
-					itemManager.appendOriginalItem(at: .trailing)
+					itemManager.appendOriginalItem(at: .detail)
 				}
 			} else {
 				print("DetailRowDropDelegate \(id.description) no current position, appending")
 				itemManager.clearAllOriginals() // should be at most 1, FIXME -- add check
-				itemManager.appendOriginalItem(at: .trailing)
+				itemManager.appendOriginalItem(at: .detail)
 			}
 		} else {
 			// is not dragging already??? Error

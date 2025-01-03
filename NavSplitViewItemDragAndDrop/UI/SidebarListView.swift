@@ -14,14 +14,14 @@ struct SidebarListView: View {
 
 	var body: some View {
 		List {
-			ForEach(itemManager.leadingItems) { item in
+			ForEach(itemManager.sidebarItems) { item in
 				SidebarItemView(item: item, itemManager: $itemManager)
 					.draggable(item)
 					.border(Color.blue, width: 4)
 			}
 			SidebarSpaceAppendView(itemManager: $itemManager)
 		}
-		.background(.white)
+		.background(.blue)
 		.border(.purple, width: 4)
     }
 }
